@@ -45,7 +45,7 @@ jobs:
             awk '{print "javascript:(function(){" $0 "})()"}')
 
           # Save to file
-          echo "$BOOKMARKLET_I" > fmtd-i-bookmarklet.min.js
+          echo "$BOOKMARKLET_I" > fmtd-i.min.js
 
           # Output for debugging
           echo "Bookmarklet for fmtd-i.js generated:"
@@ -71,7 +71,7 @@ jobs:
             awk '{print "javascript:(function(){" $0 "})()"}')
 
           # Save to file
-          echo "$BOOKMARKLET_O" > fmtd-o-bookmarklet.min.js
+          echo "$BOOKMARKLET_O" > fmtd-o.min.js
 
           # Output for debugging
           echo "Bookmarklet for fmtd-o.js generated:"
