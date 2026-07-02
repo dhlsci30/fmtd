@@ -1,0 +1,60 @@
+name: Convert JS to Bookmarklet
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required to push changes
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch full history for git operations
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install --global js-beautify  # Optional: for formatting
+
+      - name: Convert JS to Bookmarklet
+        id: convert
+        run: |
+          # Read the JS file
+          JS_FILE="bookmarklet.js"
+          if [ ! -f "$JS_FILE" ]; then
+            echo "Error: $JS_FILE not found!"
+            exit 1
+          fi
+
+          # Convert to bookmarklet
+          BOOKMARKLET=$(cat "$JS_FILE" | \
+            sed 's/^ *//;s/ *$//' | \
+            tr -d '\n' | \
+            sed 's/"/\\"/g' | \
+            sed 's/`/\\`/g' | \
+            sed "s/'/\\'/g" | \
+            awk '{print "javascript:(function(){" $0 "})()"}')
+
+          # Save to file
+          echo "$BOOKMARKLET" > bookmarklet.min.js
+
+          # Output for debugging
+          echo "Bookmarklet generated:"
+          echo "$BOOKMARKLET"
+
+      - name: Commit bookmarklet.min.js
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add bookmarklet.min.js
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update bookmarklet.min.js [skip ci]"
+          git push
