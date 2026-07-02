@@ -1,4 +1,4 @@
-name: Convert JS to Bookmarklet
+name: Generate bookmarklets
 
 on:
   push:
@@ -22,21 +22,21 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: npm install --global js-beautify  # Optional: for formatting
+      - name: Install dependencies (optional)
+        run: npm install --global js-beautify  # For formatting
 
-      - name: Convert JS to Bookmarklet
-        id: convert
+      - name: Convert fmtd-i.js to Bookmarklet
+        id: convert-i
         run: |
           # Read the JS file
-          JS_FILE="bookmarklet.js"
+          JS_FILE="fmtd-i.js"
           if [ ! -f "$JS_FILE" ]; then
             echo "Error: $JS_FILE not found!"
             exit 1
           fi
 
           # Convert to bookmarklet
-          BOOKMARKLET=$(cat "$JS_FILE" | \
+          BOOKMARKLET_I=$(cat "$JS_FILE" | \
             sed 's/^ *//;s/ *$//' | \
             tr -d '\n' | \
             sed 's/"/\\"/g' | \
@@ -45,16 +45,42 @@ jobs:
             awk '{print "javascript:(function(){" $0 "})()"}')
 
           # Save to file
-          echo "$BOOKMARKLET" > bookmarklet.min.js
+          echo "$BOOKMARKLET_I" > fmtd-i-bookmarklet.min.js
 
           # Output for debugging
-          echo "Bookmarklet generated:"
-          echo "$BOOKMARKLET"
+          echo "Bookmarklet for fmtd-i.js generated:"
+          echo "$BOOKMARKLET_I"
 
-      - name: Commit bookmarklet.min.js
+      - name: Convert fmtd-o.js to Bookmarklet
+        id: convert-o
+        run: |
+          # Read the JS file
+          JS_FILE="fmtd-o.js"
+          if [ ! -f "$JS_FILE" ]; then
+            echo "Error: $JS_FILE not found!"
+            exit 1
+          fi
+
+          # Convert to bookmarklet
+          BOOKMARKLET_O=$(cat "$JS_FILE" | \
+            sed 's/^ *//;s/ *$//' | \
+            tr -d '\n' | \
+            sed 's/"/\\"/g' | \
+            sed 's/`/\\`/g' | \
+            sed "s/'/\\'/g" | \
+            awk '{print "javascript:(function(){" $0 "})()"}')
+
+          # Save to file
+          echo "$BOOKMARKLET_O" > fmtd-o-bookmarklet.min.js
+
+          # Output for debugging
+          echo "Bookmarklet for fmtd-o.js generated:"
+          echo "$BOOKMARKLET_O"
+
+      - name: Commit bookmarklet files
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add bookmarklet.min.js
-          git diff --quiet && git diff --staged --quiet || git commit -m "Update bookmarklet.min.js [skip ci]"
+          git add fmtd-i-bookmarklet.min.js fmtd-o-bookmarklet.min.js
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update bookmarklet files [skip ci]"
           git push
