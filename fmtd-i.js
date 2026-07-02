@@ -1,0 +1,97 @@
+async function u(input) {
+  const payload = {
+    "fleetId": 91011,
+    "templateId": 630,
+    "updateExisting": false,
+    "job": {
+      "legs": [
+        {
+          "items": [{"count":null}],
+          "arriveTime": null, "departTime": null,
+          "legCustomer": {
+            "customerAddress": "122-124 CANTERBURY RD,BAYSWATER NORTH,VIC,3153"
+          },
+          "legType": 0
+        }
+      ],
+      "docketNumber": "DNP0000000",
+      "reference": "NSW 0 0",
+      "title": "E BAYSWATER TEST - G",
+      "referenceInt": null,
+      "driverCanEditDocketNumber": false,
+      "duration": null,
+      "jobNumber": 1000000000,
+      "startTime": "2026-06-24T02:00:00.000Z"
+    }
+  };
+  input = JSON.parse(input);
+  if (input.length != 5) {
+    document.getElementById("fmtd").value = "Invalid data";
+    return;
+  }
+  payload.job.title = input[0];
+  payload.job.reference = input[1];
+  payload.job.docketNumber = input[2];
+  payload.job.startTime = input[3];
+  payload.job.legs[0].legCustomer.customerAddress = input[4];
+  if (payload.job.docketNumber == "DNP0000000") {
+    document.getElementById("fmtd").value = "Invalid data";
+    return;
+  }
+  console.log(input, payload);
+  localStorage.setItem("lookups", parseInt(localStorage.getItem("lookups"))+1);
+  updateCounter();
+  await fetch("/Hawkeye/api2/section/job/import/add", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify(payload)
+  });
+  document.getElementById("fmtd").value = "";
+}
+
+function draw() {
+  const container = document.createElement("div");
+  container.style = "width:40%;text-align:left;bottom:0;left:0;position:absolute;background:slategrey;margin:2em;padding:1em;border-radius:10px;z-index:100000;font-size:16px;font-family:'Segoe UI'";
+
+  const header = document.createElement("b");
+  header.textContent = "FMTD-I";
+  header.style = "font-weight:700";
+
+  const counter = document.createElement("i");
+  counter.style = "margin-right:1em;float:right";
+  counter.id = "lookupsCount";
+
+  const button = document.createElement("button");
+  button.textContent = "Upload Consignment";
+  button.style = "float:right;font-size:inherit;font-family:inherit";
+
+  const input = document.createElement("input");
+  input.id = "fmtd";
+  input.placeholder = "FMTD-O output";
+  input.style = "width:100%;text-align:right";
+
+  button.addEventListener("click", async () => {
+    await u(input.value);
+  });
+  input.addEventListener("click", async () => {
+    await navigator.clipboard.readText().then((i) => {
+      input.value = i;
+    })
+  });
+  container.append(header, button, counter, input);
+  document.body.appendChild(container);
+}
+
+function updateCounter() {
+  document.getElementById("lookupsCount").innerHTML = localStorage.getItem("lookups");
+}
+
+function init() {
+    if (!localStorage.getItem("lookups")) {
+        localStorage.setItem("lookups", 0);
+    }
+    draw();
+    updateCounter();
+}
+
+init();
