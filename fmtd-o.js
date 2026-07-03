@@ -16,7 +16,7 @@ const normalSuburbs = new Map([
 const suburbs = new Map([
 ...["dandenong","braeside","carrum","cheltenham","clayton","cranbourne","dingley","hallam","keysborough","mentone",
 "moorabbin","pakenham","chelsea","huntingdale","noble park","oakleigh","dromana","highett","seaford","lynbrook",
-"springvale","narre","mordialloc","somerville"].map(s => [s,"S"]),
+"springvale","narre","mordialloc","somerville","frankston"].map(s => [s,"S"]),
 ...["truganina","altona","brooklyn","deer park","derrimut","laverton","maidstone","port melb","ravenhall",
 "sunshine","tottenham","footscray","hoppers","williamstown","yarraville","bell park",
 "south wharf"].map(s => [s,"W"]),
