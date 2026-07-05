@@ -102,6 +102,11 @@ async function searchOrder(orderId, email) {
 }
 
 async function c(orderId) {
+    if (abc.substring(0,3) == "DSC") {
+        domain = "PLNAU";
+    } else {
+        domain = "AUNWP";
+    }
     orderId = orderId.trim().toUpperCase();
     const email = document.getElementById("dhlEmail").value;
     localStorage.setItem("dhlEmail", email);
