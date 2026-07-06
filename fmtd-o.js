@@ -25,7 +25,7 @@ const suburbs = new Map([
 "bulleen","thornbury"].map(s => [s,"N"]),
 ...["bayswater","rowville","gruyere","knoxfield","mt waverley","kilsyth","mitcham","silvan","mulgrave","ringwood",
 "yarra junction","healesville","lilydale","croydon","scoresby","seville","wantirna","coldstream",
-"notting hill","boronia"].map(s => [s,"E"])
+"notting hill","boronia","nunawading"].map(s => [s,"E"])
 ]);
 
 const customers = new Map([
