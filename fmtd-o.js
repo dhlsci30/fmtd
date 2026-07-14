@@ -98,7 +98,7 @@ async function searchOrder(orderId, email) {
     const payload = {ordersRequest:{orderId, userName:email, domain:domain}};
     const data = await fetchData("/searchOrders", payload);
     let order = data.getOrdersResponse.getOrders[0];
-    return [order.senderSuburb, order.senderName, order.rateServiceId, order.rcvrProvince, order.senderProvince, order.sourceLocationId, order.latePickupDate, order.sourceLocation];
+    return [order.senderSuburb, order.senderName, order.rateServiceId || "G", order.rcvrProvince, order.senderProvince, order.sourceLocationId, order.latePickupDate, order.sourceLocation];
 }
 
 async function c(orderId) {
