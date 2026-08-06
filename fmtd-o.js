@@ -10,7 +10,7 @@ const normalSuburbs = new Map([
     ["bayswater north", "bayswater"], ["keilor park", "keilor"], ["seville east", "seville"],
     ["coburg north", "coburg"], ["sunshine north", "sunshine"], ["heidelberg heights", "heidelberg"],
     ["mitcham north", "mitcham"], ["keilor east", "keilor"], ["melbourne airport", "airport"], ["kilsyth south", "kilsyth"],
-    ["heidelberg west", "heidelberg"]
+    ["heidelberg west", "heidelberg"], ["north melbourne", "north melb"]
 ]);
 
 const suburbs = new Map([
@@ -19,7 +19,7 @@ const suburbs = new Map([
 "springvale","narre","mordialloc","somerville","frankston"].map(s => [s,"S"]),
 ...["truganina","altona","brooklyn","deer park","derrimut","laverton","maidstone","port melb","ravenhall",
 "sunshine","tottenham","footscray","hoppers","williamstown","yarraville","bell park",
-"south wharf"].map(s => [s,"W"]),
+"south wharf", "north melb"].map(s => [s,"W"]),
 ...["thomastown","reservoir","broadmeadows","brunswick","campbellfield","coburg","heidelberg","preston","somerton",
 "tullamarine","bundoora","coolaroo","keilor","epping","eltham","craigieburn","fawkner","greenvale","airport",
 "bulleen","thornbury"].map(s => [s,"N"]),
