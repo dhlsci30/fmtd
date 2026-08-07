@@ -1,39 +1,57 @@
 async function u(input) {
   const payload = {
-    "fleetId": 91011,
-    "templateId": 630,
-    "updateExisting": false,
-    "job": {
-      "legs": [
-        {
-          "items": [{"count":null}],
-          "arriveTime": null, "departTime": null,
-          "legCustomer": {
-            "customerAddress": "122-124 CANTERBURY RD,BAYSWATER NORTH,VIC,3153"
-          },
-          "legType": 0
-        }
-      ],
+    "jobType": 7,
+    "assignment": {
+      "templateId": 637,
+      "assignmentTypeId": 4,
+      "fleetId": 91011,
+      "group": {
+        "fleetId": 91011,
+        "groupId": 9
+      }
+    },
+    "details": {
       "docketNumber": "DNP0000000",
+      "notes": "",
       "reference": "NSW 0 0",
+      "start": "08/08/2026 00:00",
+      "startTypeId": 2,
       "title": "E BAYSWATER TEST - G",
-      "referenceInt": null,
-      "driverCanEditDocketNumber": false,
-      "duration": null,
-      "jobNumber": 1000000000,
-      "startTime": "2026-06-24T02:00:00.000Z"
-    }
+      "reference2": ""
+    },
+    "dispatch": {
+      "dispatchStartType": 1,
+      "dispatchEndType": 1
+    },
+    "legs": [
+      {
+        "id": -1,
+        "canEdit": true,
+        "legNumber": 1,
+        "customer": {
+          "id": 1177678,
+          "customerListId": 221,
+          "customerListVersion": 1708,
+          "customerType": 2,
+          "address": "16-18 Burgess Rd, Bayswater North, Victoria, 3153"
+        },
+        "legTypeText": "Pickup",
+        "legTypeId": 2,
+        "address": "16-18 Burgess Rd, Bayswater North, Victoria, 3153"
+      }
+    ]
   };
   input = JSON.parse(input);
   if (input.length != 5) {
     document.getElementById("fmtd").value = "Invalid data";
     return;
   }
-  payload.job.title = input[0];
-  payload.job.reference = input[1];
-  payload.job.docketNumber = input[2];
-  payload.job.startTime = input[3];
-  payload.job.legs[0].legCustomer.customerAddress = input[4];
+  payload.details.title = input[0];
+  payload.details.reference = input[1];
+  payload.details.docketNumber = input[2];
+  payload.details.start = input[3];
+  payload.legs[0].customer.address = input[4];
+  payload.legs[0].address = input[4];
   if (payload.job.docketNumber == "DNP0000000") {
     document.getElementById("fmtd").value = "Invalid data";
     return;
@@ -41,7 +59,7 @@ async function u(input) {
   console.log(input, payload);
   localStorage.setItem("lookups", parseInt(localStorage.getItem("lookups"))+1);
   updateCounter();
-  await fetch("/Hawkeye/api2/section/job/import/add", {
+  await fetch("/Hawkeye/api2/section/job/detail/save", {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify(payload)
