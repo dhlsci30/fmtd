@@ -194,6 +194,7 @@ function draw() {
         if (new Date(resp[9]) < new Date().setHours(0, 0, 0, 0)) {
             resp[9] = new Date(new Date().setHours(0,0,0,0)).toISOString();
         }
+        resp[9] = new Date(resp[9]).toLocateDateString();
         console.log(resp);
         notice.textContent = resp[0];
         title.value = `${resp[1]} ${resp[2]} ${resp[3]} - ${resp[4]}`;
