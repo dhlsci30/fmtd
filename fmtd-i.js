@@ -48,10 +48,11 @@ async function u(input) {
   }
   payload.details.title = input[0];
   payload.details.reference = input[1];
-  payload.details.docketNumber = input[2];
-  payload.details.start = input[3];
-  payload.legs[0].customer.address = input[4];
-  payload.legs[0].address = input[4];
+  payload.details.reference2 = input[2];
+  payload.details.docketNumber = input[3];
+  payload.details.start = input[4];
+  payload.legs[0].customer.address = input[5];
+  payload.legs[0].address = input[5];
   if (payload.details.docketNumber == "DNP0000000") {
     document.getElementById("fmtd").value = "Invalid data";
     return;
