@@ -190,16 +190,16 @@ function draw() {
 
     button.addEventListener("click", async () => {
         resp = await c(input.value)
-        console.log(resp);
         let date = new Date(resp[9]);
         if (new Date(resp[9]) < new Date().setHours(0, 0, 0, 0)) {
             resp[9] = new Date(new Date().setHours(0,0,0,0)).toISOString();
         }
+        console.log(resp);
         notice.textContent = resp[0];
         title.value = `${resp[1]} ${resp[2]} ${resp[3]} - ${resp[4]}`;
         ref.value = `${resp[5]} ${resp[6]}`;
         con.value = `${resp[7]}`;
-        csv.value = `["${title.value}","${ref.value}","${resp[11]}","${con.value}","${resp[9].toLocaleString()}","${resp[10]}"]`;
+        csv.value = `["${title.value}","${ref.value}","${resp[11]}","${con.value}","${resp[9]}","${resp[10]}"]`;
         input.value = ``;
     });
     title.addEventListener("click", writeClipboard);
