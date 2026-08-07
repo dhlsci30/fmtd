@@ -199,7 +199,7 @@ function draw() {
         title.value = `${resp[1]} ${resp[2]} ${resp[3]} - ${resp[4]}`;
         ref.value = `${resp[5]} ${resp[6]}`;
         con.value = `${resp[7]}`;
-        csv.value = `["${title.value}","${ref.value}","${resp[11]}","${con.value}","${resp[9]} 00:00","${resp[10]}"]`;
+        csv.value = `["${title.value}","${ref.value}","${resp[11]}","${con.value}","${resp[9]} 00:00","${resp[10]}","${resp[8]}"]`;
         input.value = ``;
     });
     title.addEventListener("click", writeClipboard);
