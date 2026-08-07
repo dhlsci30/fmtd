@@ -99,7 +99,7 @@ async function searchOrder(orderId, email) {
     const payload = {ordersRequest:{orderId, userName:email, domain:domain}};
     const data = await fetchData("/searchOrders", payload);
     let order = data.getOrdersResponse.getOrders[0];
-    return [order.senderSuburb, order.senderName, order.rateServiceId || "G", order.rcvrProvince, order.senderProvince, order.sourceLocationId, order.latePickupDate, order.sourceLocation];
+    return [order.senderSuburb, order.senderName, order.rateServiceId || "G", order.rcvrProvince, order.senderProvince, order.sourceLocationId, order.latePickupDate, order.sourceLocation, order.rcvrSuburb];
 }
 
 async function c(orderId) {
@@ -137,7 +137,7 @@ async function c(orderId) {
         console.log(search[5]);
         localStorage.setItem("lookups", parseInt(localStorage.getItem("lookups"))+1);
         updateCounter();
-        return [notice, cardinal(normalise(search[0].toLowerCase())), normalise(search[0].toLowerCase()).toUpperCase(), rename(search[1], search[5]), search[2][0], search[3], details[0], orderId, details[1], date.toISOString(), search[7]];
+        return [notice, cardinal(normalise(search[0].toLowerCase())), normalise(search[0].toLowerCase()).toUpperCase(), rename(search[1], search[5]), search[2][0], search[3], details[0], orderId, details[1], date.toISOString(), search[7], search[8]];
     } catch (error) {
         return [`Error fetching order info: ${error}`];
     }
