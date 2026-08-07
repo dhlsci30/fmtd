@@ -44,7 +44,7 @@ async function u(input) {
     ]
   };
   input = JSON.parse(input);
-  if (input.length != 6) {
+  if (input.length != 7) {
     document.getElementById("fmtd").value = "Invalid data";
     return;
   }
@@ -55,6 +55,7 @@ async function u(input) {
   payload.details.start = input[4];
   payload.legs[0].customer.address = input[5];
   payload.legs[0].address = input[5];
+  payload.details.notes = input[6];
   if (payload.details.docketNumber == "DNP0000000") {
     document.getElementById("fmtd").value = "Invalid data";
     return;
