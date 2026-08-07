@@ -20,6 +20,8 @@ async function u(input) {
       "reference2": ""
     },
     "dispatch": {
+      "start": null,
+      "end": null,
       "dispatchStartType": 1,
       "dispatchEndType": 1
     },
