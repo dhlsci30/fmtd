@@ -52,7 +52,7 @@ async function u(input) {
   payload.details.start = input[3];
   payload.legs[0].customer.address = input[4];
   payload.legs[0].address = input[4];
-  if (payload.job.docketNumber == "DNP0000000") {
+  if (payload.details.docketNumber == "DNP0000000") {
     document.getElementById("fmtd").value = "Invalid data";
     return;
   }
