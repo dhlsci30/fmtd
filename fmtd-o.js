@@ -59,6 +59,8 @@ const customers = new Map([
     ["31776_15827930", "ARLEC/BUNNINGS"], ["31776_15829515", "GAP/BUNNINGS"], ["31776_15833744", "SABCO/BUNNINGS"]
 ]);
 
+const bunnings = new Array(["31776_15827930", "31776_15829515", "31776_15833744"]);
+
 const normalise = s => normalSuburbs.get(s) || s;
 const cardinal = s => suburbs.get(s) || "UNK";
 const rename = (name, id) => customers.get(id) || name;
@@ -135,6 +137,10 @@ async function c(orderId) {
         }
 
         console.log(search[5]);
+        if (!bunnings.includes(search[5])) {
+            search[8] = "";
+        }
+        
         localStorage.setItem("lookups", parseInt(localStorage.getItem("lookups"))+1);
         updateCounter();
         return [notice, cardinal(normalise(search[0].toLowerCase())), normalise(search[0].toLowerCase()).toUpperCase(), rename(search[1], search[5]), search[2][0], search[3], details[0], orderId, details[1], date.toISOString(), search[7], search[8]];
@@ -193,7 +199,7 @@ function draw() {
         title.value = `${resp[1]} ${resp[2]} ${resp[3]} - ${resp[4]}`;
         ref.value = `${resp[5]} ${resp[6]}`;
         con.value = `${resp[7]}`;
-        csv.value = `["${title.value}","${ref.value}","","${con.value}","${resp[9]}","${resp[10]}"]`;
+        csv.value = `["${title.value}","${ref.value}","${resp[11]}","${con.value}","${resp[9]}","${resp[10]}"]`;
         input.value = ``;
     });
     title.addEventListener("click", writeClipboard);
