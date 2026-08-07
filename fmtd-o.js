@@ -59,7 +59,7 @@ const customers = new Map([
     ["31776_15827930", "ARLEC/BUNNINGS"], ["31776_15829515", "GAP/BUNNINGS"], ["31776_15833744", "SABCO/BUNNINGS"]
 ]);
 
-const bunnings = new Array("31776_15827930", "31776_15829515", "31776_15833744");
+const bunnings = ["31776_15827930", "31776_15829515", "31776_15833744"];
 
 const normalise = s => normalSuburbs.get(s) || s;
 const cardinal = s => suburbs.get(s) || "UNK";
