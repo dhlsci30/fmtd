@@ -19,7 +19,7 @@ const suburbs = new Map([
 "springvale","narre","mordialloc","somerville","frankston"].map(s => [s,"S"]),
 ...["truganina","altona","brooklyn","deer park","derrimut","laverton","maidstone","port melb","ravenhall",
 "sunshine","tottenham","footscray","hoppers","williamstown","yarraville","bell park",
-"south wharf","north melb","werribee"].map(s => [s,"W"]),
+"south wharf","north melb","werribee","abbotsford","prahran"].map(s => [s,"W"]),
 ...["thomastown","reservoir","broadmeadows","brunswick","campbellfield","coburg","heidelberg","preston","somerton",
 "tullamarine","bundoora","coolaroo","keilor","epping","eltham","craigieburn","fawkner","greenvale","airport",
 "bulleen","thornbury","westmeadows"].map(s => [s,"N"]),
