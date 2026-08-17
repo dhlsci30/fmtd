@@ -73,14 +73,14 @@ async function u(input) {
 
 function draw() {
   const container = document.createElement("div");
-  container.style = "width:40%;text-align:left;bottom:0;left:0;position:absolute;background:slategrey;margin:2em;padding:1em;border-radius:10px;z-index:100000;font-size:16px;font-family:'Segoe UI'";
+  container.style = "width:100%;bottom:0;position:absolute;background:slategrey;border-top-left-radius:10px;border-top-right-radius:10px;z-index:100000;font-size:16px;font-family:'Segoe UI'";
 
   const header = document.createElement("b");
   header.textContent = "FMTD-I";
-  header.style = "font-weight:700";
+  header.style = "font-weight:700;margin-left:1em;margin-right:1em;";
 
   const counter = document.createElement("i");
-  counter.style = "margin-right:1em;float:right";
+  counter.style = "margin-right:1em;margin-top:0.2em;float:right";
   counter.id = "lookupsCount";
 
   const button = document.createElement("button");
@@ -90,7 +90,7 @@ function draw() {
   const input = document.createElement("input");
   input.id = "fmtd";
   input.placeholder = "FMTD-O output";
-  input.style = "width:100%;text-align:right";
+  input.style = "width:60%;text-align:right";
 
   button.addEventListener("click", async () => {
     await u(input.value);
