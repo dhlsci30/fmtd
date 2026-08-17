@@ -90,7 +90,7 @@ function draw() {
   const input = document.createElement("input");
   input.id = "fmtd";
   input.placeholder = "FMTD-O output";
-  input.style = "width:60%;text-align:right";
+  input.style = "width:72%;text-align:right";
 
   button.addEventListener("click", async () => {
     await u(input.value);
