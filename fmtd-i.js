@@ -80,7 +80,7 @@ function draw() {
   header.style = "font-weight:700;margin-left:1em;margin-right:1em;";
 
   const counter = document.createElement("i");
-  counter.style = "margin-right:1em;margin-top:0.2em;float:right";
+  counter.style = "margin-right:1em;margin-top:0.3em;float:right";
   counter.id = "lookupsCount";
 
   const button = document.createElement("button");
