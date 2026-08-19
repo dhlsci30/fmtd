@@ -69,10 +69,11 @@ const normalise = s => normalSuburbs.get(s) || s;
 const cardinal = s => suburbs.get(s) || "UNK";
 const rename = (name, id) => customers.get(id) || name;
 
-async function mass(cons) {
- massResponse = [];
- barcodes = [];
- cons.forEach(con=>doMass(con));
+async function mass() {
+    let input = prompt("CSV consignments").split(",");
+    massResponse = [];
+    barcodes = [];
+    cons.forEach(con=>doMass(con));
 }
 
 async function doMass(con) {
