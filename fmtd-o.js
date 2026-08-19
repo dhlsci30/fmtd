@@ -77,8 +77,14 @@ async function mass() {
 }
 
 async function doMass(con) {
- let resp = await c(con);
- massResponse.push(`["${resp[1]} ${resp[2]} ${resp[3]} - ${resp[4]}","${resp[5]} ${resp[6]}","${resp[11]}","${resp[7]}","${resp[9]} 00:00","${resp[10]}","${resp[8]}"]`);
+    let resp = await c(con);
+    const today = new Date().setHours(0, 0, 0, 0);
+    if (resp[9] == null) {
+        resp[9] = today;
+    }
+    const date = new Date(resp[9])
+    date.setHours(0, 0, 0, 0);
+    massResponse.push(`["${resp[1]} ${resp[2]} ${resp[3]} - ${resp[4]}","${resp[5]} ${resp[6]}","${resp[11]}","${resp[7]}","${date.toISOString()} 00:00","${resp[10]}","${resp[8]}"]`);
 }
 
 async function fetchData(endpoint, payload) {
