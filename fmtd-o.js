@@ -1,4 +1,6 @@
 let domain = "AUNWP";
+let massResponse = [];
+let barcodes = [];
 
 const normalSuburbs = new Map([
     ["dandenong south", "dandenong"], ["port melbourne", "port melb"], ["mount waverley", "mt waverley"],
@@ -155,6 +157,8 @@ async function c(orderId) {
         if (!bunnings.includes(search[5])) {
             search[8] = "";
         }
+
+        details[3].forEach(bc=>barcodes.push(bc));
         
         localStorage.setItem("lookups", parseInt(localStorage.getItem("lookups"))+1);
         updateCounter();
