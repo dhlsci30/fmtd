@@ -104,6 +104,10 @@ function draw() {
   document.body.appendChild(container);
 }
 
+function mass(input) {
+  input.forEach(job=>u(job));
+}
+
 function updateCounter() {
   document.getElementById("lookupsCount").innerHTML = localStorage.getItem("lookups");
 }
