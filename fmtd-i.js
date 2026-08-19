@@ -104,7 +104,8 @@ function draw() {
   document.body.appendChild(container);
 }
 
-function mass(input) {
+function mass() {
+  let input = JSON.parse(prompt("FMTD-O massResponse"));
   input.forEach(job=>u(job));
 }
 
