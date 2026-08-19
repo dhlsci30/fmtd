@@ -86,13 +86,15 @@ async function getOrderDetails(orderId, email) {
     const payload = {ordersRequest:{orderId, userName:email, domain:domain}};
     const data = await fetchData("/getOrderDetail", payload);
     let qty = 0, weight = 0, spaces = 0;
+    let barcodes = [];
     let dg = new Map();
     const items = [];
     data.getOrdersResponse.getOrders[0].itemDetails.forEach((item) => {
         qty+=parseInt(item.quantity);
         weight+=parseInt(item.weight);
-        spaces+=Math.ceil(parseInt(item.length)/125)*Math.ceil(parseInt(item.width)/125)
-        items.push(`${item.length}x${item.width}x${item.height}`)
+        spaces+=Math.ceil(parseInt(item.length)/125)*Math.ceil(parseInt(item.width)/125);
+        items.push(`${item.length}x${item.width}x${item.height}`);
+        barcodes.push(item.id);
 
         if (item.dgFlag == "Y") {
             let weight = 0;
@@ -107,7 +109,7 @@ async function getOrderDetails(orderId, email) {
         ref+= ` ${spaces}SPC`;
     }
     dg.forEach((value, key)=>ref+=` DG${key}-${value}KG`);
-    return [ref, items, dg];
+    return [ref, items, dg, barcodes];
 }
 
 async function searchOrder(orderId, email) {
