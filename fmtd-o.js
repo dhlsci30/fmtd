@@ -69,6 +69,17 @@ const normalise = s => normalSuburbs.get(s) || s;
 const cardinal = s => suburbs.get(s) || "UNK";
 const rename = (name, id) => customers.get(id) || name;
 
+async function mass(cons) {
+ massResponse = [];
+ barcodes = [];
+ cons.forEach(con=>doMass(con));
+}
+
+async function doMass(con) {
+ let resp = await c(con);
+ massResponse.push(`["${resp[1]} ${resp[2]} ${resp[3]} - ${resp[4]}","${resp[5]} ${resp[6]}","${resp[11]}","${resp[7]}","${resp[9]} 00:00","${resp[10]}","${resp[8]}"]`);
+}
+
 async function fetchData(endpoint, payload) {
     const response = await fetch(endpoint, {
         method: "POST",
