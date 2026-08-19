@@ -84,7 +84,13 @@ async function doMass(con) {
     }
     const date = new Date(resp[9])
     date.setHours(0, 0, 0, 0);
-    massResponse.push(`["${resp[1]} ${resp[2]} ${resp[3]} - ${resp[4]}","${resp[5]} ${resp[6]}","${resp[11]}","${resp[7]}","${date.toISOString()} 00:00","${resp[10]}","${resp[8]}"]`);
+
+    if (new Date(resp[9]) < new Date().setHours(0, 0, 0, 0)) {
+        resp[9] = new Date(new Date().setHours(0,0,0,0)).toISOString();
+    }
+    resp[9] = new Date(resp[9]).toLocaleDateString();
+    
+    massResponse.push(`["${resp[1]} ${resp[2]} ${resp[3]} - ${resp[4]}","${resp[5]} ${resp[6]}","${resp[11]}","${resp[7]}","${resp[9]} 00:00","${resp[10]}","${resp[8]}"]`);
 }
 
 async function fetchData(endpoint, payload) {
