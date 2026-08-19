@@ -73,7 +73,7 @@ async function mass() {
     let input = prompt("CSV consignments").split(",");
     massResponse = [];
     barcodes = [];
-    cons.forEach(con=>doMass(con));
+    input.forEach(con=>doMass(con));
 }
 
 async function doMass(con) {
