@@ -18,7 +18,7 @@ const normalSuburbs = new Map([
 const suburbs = new Map([
 ...["dandenong","braeside","carrum","cheltenham","clayton","cranbourne","dingley","hallam","keysborough","mentone",
 "moorabbin","pakenham","chelsea","huntingdale","noble park","oakleigh","dromana","highett","seaford","lynbrook",
-"springvale","narre","mordialloc","somerville","frankston"].map(s => [s,"S"]),
+"springvale","narre","mordialloc","somerville","frankston","heatherton"].map(s => [s,"S"]),
 ...["truganina","altona","brooklyn","deer park","derrimut","laverton","maidstone","port melb","ravenhall",
 "sunshine","tottenham","footscray","hoppers","williamstown","yarraville","bell park",
 "south wharf","north melb","werribee","abbotsford","prahran"].map(s => [s,"W"]),
@@ -60,10 +60,10 @@ const customers = new Map([
     ["30386_15547811", "A-FLO CLS1530"], ["31686_15604957", "CAPLAN/PRYME/METCASH CLS1400"], ["31686_13175585", "NONG SHIM/METCASH CLS1530"], ["31740_70086", "KWIND CLS1500"],
     ["31776_15827930", "ARLEC/BUNNINGS"], ["31776_15829515", "GAP/BUNNINGS"], ["31776_15833744", "SABCO/BUNNINGS"], ["31776_15701817", "RAPID/BUNNINGS"], ["31776_15870428", "EHI/BUNNINGS"],
     ["31776_15870561", "OZITO/BUNNINGS"], ["30792_14688124", "PHILIP MORRIS"], ["30223_15364366", "BLACKMORES"], ["30084_14196119", "AMCOR/TOLL"], ["30269_15876527", "BACO CLS1400"],
-    ["30989_9695465", "14DEGREES RDY1200"], ["31653_12777388", "14DEGREES RDY1200"], ["31653_12777388", "14DEGREES RDY1200"], ["31653_12306354", "14DEGREES RDY1200"]
+    ["30989_9695465", "14DEGREES RDY1200"], ["31653_12777388", "14DEGREES RDY1200"], ["31653_12777388", "14DEGREES RDY1200"], ["31653_12306354", "14DEGREES RDY1200"], ["31776_15988797", "TUFF TURF/BUNNINGS CLS1200"]
 ]);
 
-const bunnings = ["31776_15827930", "31776_15829515", "31776_15833744", "31776_15701817", "31776_15870428", "31776_15870561", "31776_15948061"];
+const bunnings = ["31776_15827930", "31776_15829515", "31776_15833744", "31776_15701817", "31776_15870428", "31776_15870561", "31776_15948061", "31776_15988797"];
 
 const normalise = s => normalSuburbs.get(s) || s;
 const cardinal = s => suburbs.get(s) || "UNK";
