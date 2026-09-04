@@ -1,6 +1,6 @@
 localStorage.setItem('suburbs', JSON.stringify({
 	
-});
+}));
 
 localStorage.setItem('normalSuburbs', JSON.stringify({
 	"dandenong south": "dandenong",
@@ -33,4 +33,4 @@ localStorage.setItem('normalSuburbs', JSON.stringify({
 	"kilsyth south": "kilsyth",
 	"heidelberg west": "heidelberg", 
 	"north melbourne": "north melb"
-});
+}));
