@@ -4,25 +4,12 @@ let barcodes = [];
 
 const customers = JSON.parse(localStorage.getItem('customers'));
 const normalSuburbs = JSON.parse(localStorage.getItem('normalSuburbs'));
-const suburbs = new Map([
-...["dandenong","braeside","carrum","cheltenham","clayton","cranbourne","dingley","hallam","keysborough","mentone",
-"moorabbin","pakenham","chelsea","huntingdale","noble park","oakleigh","dromana","highett","seaford","lynbrook",
-"springvale","narre","mordialloc","somerville","frankston","heatherton"].map(s => [s,"S"]),
-...["truganina","altona","brooklyn","deer park","derrimut","laverton","maidstone","port melb","ravenhall",
-"sunshine","tottenham","footscray","hoppers","williamstown","yarraville","bell park",
-"south wharf","north melb","werribee","abbotsford","prahran"].map(s => [s,"W"]),
-...["thomastown","reservoir","broadmeadows","brunswick","campbellfield","coburg","heidelberg","preston","somerton",
-"tullamarine","bundoora","coolaroo","keilor","epping","eltham","craigieburn","fawkner","greenvale","airport",
-"bulleen","thornbury","westmeadows"].map(s => [s,"N"]),
-...["bayswater","rowville","gruyere","knoxfield","mt waverley","kilsyth","mitcham","silvan","mulgrave","ringwood",
-"yarra junction","healesville","lilydale","croydon","scoresby","seville","wantirna","coldstream",
-"notting hill","boronia","nunawading"].map(s => [s,"E"])
-]);
+const suburbs = JSON.parse(localStorage.getItem('suburbs'));
 
 const bunnings = ["31776_15827930", "31776_15829515", "31776_15833744", "31776_15701817", "31776_15870428", "31776_15870561", "31776_15948061", "31776_15988797"];
 
 const normalise = s => normalSuburbs[s] || s;
-const cardinal = s => suburbs.get(s) || "UNK";
+const cardinal = s => suburbs[s] || "UNK";
 const rename = (name, id) => customers[id] || name;
 
 async function mass() {
