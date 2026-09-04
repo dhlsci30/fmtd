@@ -1,3 +1,40 @@
+localStorage.setItem('suburbs', JSON.stringify({
+	
+}));
+
+localStorage.setItem('normalSuburbs', JSON.stringify({
+	"dandenong south": "dandenong",
+	"port melbourne": "port melb", 
+	"mount waverley": "mt waverley",
+	"dingley village": "dingley", 
+	"oakleigh south": "oakleigh", 
+	"clayton south": "clayton",
+	"carrum downs": "carrum", 
+	"chelsea heights": "chelsea", 
+	"cranbourne west": "cranbourne",
+	"moorabbin airport": "moorabbin", 
+	"laverton north": "laverton", 
+	"altona north": "altona",
+	"williamstown north": "williamstown", 
+	"hoppers crossing": "hoppers", 
+	"croydon south": "croydon",
+	"narre warren": "narre", 
+	"west footscray": "footscray", 
+	"sunshine west": "sunshine",
+	"bayswater north": "bayswater", 
+	"keilor park": "keilor", 
+	"seville east": "seville",
+	"coburg north": "coburg", 
+	"sunshine north": "sunshine", 
+	"heidelberg heights": "heidelberg",
+	"mitcham north": "mitcham", 
+	"keilor east": "keilor", 
+	"melbourne airport": "airport", 
+	"kilsyth south": "kilsyth",
+	"heidelberg west": "heidelberg", 
+	"north melbourne": "north melb"
+}));
+
 localStorage.setItem('customers', JSON.stringify({
 	"14719": "B&M SLOTS CLS1530",
 	"14823": "BRICE CLS1600",
