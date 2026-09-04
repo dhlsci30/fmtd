@@ -1,4 +1,4 @@
-{
+localStorage.setItem('customers', JSON.stringify({
 	"dandenong south": "dandenong",
 	"port melbourne": "port melb", 
 	"mount waverley": "mt waverley",
@@ -29,4 +29,4 @@
 	"kilsyth south": "kilsyth",
 	"heidelberg west": "heidelberg", 
 	"north melbourne": "north melb"
-}
+});
