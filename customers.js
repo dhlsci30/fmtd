@@ -1,4 +1,4 @@
-{
+localStorage.setItem('customers', JSON.stringify({
 	"14719", "B&M SLOTS CLS1530",
 	"14823", "BRICE CLS1600",
 	"15550", "DAWBORN STEELS CLS1400",
@@ -145,4 +145,4 @@
 	"30792_14688124", "PHILIP MORRIS",
 	"30223_15364366", "BLACKMORES",
 	"30269_15876527", "BACO CLS1400"
-}
+});
