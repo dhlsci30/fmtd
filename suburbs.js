@@ -1,4 +1,8 @@
-localStorage.setItem('customers', JSON.stringify({
+localStorage.setItem('suburbs', JSON.stringify({
+	
+});
+
+localStorage.setItem('normalSuburbs', JSON.stringify({
 	"dandenong south": "dandenong",
 	"port melbourne": "port melb", 
 	"mount waverley": "mt waverley",
