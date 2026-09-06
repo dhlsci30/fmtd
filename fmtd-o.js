@@ -6,7 +6,7 @@ const customers = JSON.parse(localStorage.getItem('customers'));
 const normalSuburbs = JSON.parse(localStorage.getItem('normalSuburbs'));
 const suburbs = JSON.parse(localStorage.getItem('suburbs'));
 
-const bunnings = ["31776_15827930", "31776_15829515", "31776_15833744", "31776_15701817", "31776_15870428", "31776_15870561", "31776_15948061", "31776_15988797"];
+const bunnings = ["31776_15827930", "31776_15829515", "31776_15833744", "31776_15701817", "31776_15870428", "31776_15870561", "31776_15948061", "31776_15988797", "31776_16029055"];
 
 const normalise = s => normalSuburbs[s] || s;
 const cardinal = s => suburbs[s] || "UNK";
