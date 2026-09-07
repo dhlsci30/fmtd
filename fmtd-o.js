@@ -18,6 +18,10 @@ async function mass() {
     massResponse = [];
     barcodes = [];
     input.forEach(con=>doMass(con));
+    setTimeout(async () => {
+        await navigator.clipboard.writeText(JSON.stringify(massResponse));
+        alert("Mass consignments copied to clipboard");
+    }, 8000);
 }
 
 async function doMass(con) {
@@ -148,6 +152,10 @@ function draw() {
     login.id = "dhlEmail";
     login.style = "margin-left:1em";
 
+    const massb = document.createElement("button");
+    massb.textContent = "Mass";
+    massb.style = "border:0";
+
     const counter = document.createElement("i");
     counter.style = "margin-right:1em;float:right";
     counter.id = "lookupsCount";
@@ -212,11 +220,12 @@ function draw() {
         ref2.value = `${resp[11]}`;
         input.value = ``;
     });
+    massb.addEventListener("click", mass);
     title.addEventListener("click", writeClipboard);
     ref.addEventListener("click", writeClipboard);
     con.addEventListener("click", writeClipboard);
     output.addEventListener("click", outputClipboard)
-    container.append(header, login, button, input, counter, title, ref, con, address, dims, pdate, ref2, output, notice);
+    container.append(header, login, massb, button, input, counter, title, ref, con, address, dims, pdate, ref2, output, notice);
     document.body.appendChild(container);
 }
 
