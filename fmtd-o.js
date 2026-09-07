@@ -130,7 +130,7 @@ async function c(orderId) {
         
         localStorage.setItem("lookups", parseInt(localStorage.getItem("lookups"))+1);
         updateCounter();
-        return [notice, cardinal(normalise(search[0].toLowerCase())), normalise(search[0].toLowerCase()).toUpperCase(), rename(search[1], search[5]), search[2][0], search[3], details[0], orderId, details[1], date.toISOString(), search[7], search[8]];
+        return [notice, cardinal(normalise(search[0].toLowerCase())), normalise(search[0].toLowerCase()).toUpperCase(), rename(search[1], search[5]), search[2][0], search[3], details[0], orderId, details[1], date, search[7], search[8]];
     } catch (error) {
         return [`Error fetching order info: ${error}`];
     }
@@ -199,15 +199,16 @@ function draw() {
         resp = await c(input.value)
         let date = new Date(resp[9]);
         if (new Date(resp[9]) < new Date().setHours(0, 0, 0, 0)) {
-            resp[9] = new Date(new Date().setHours(0,0,0,0)).toISOString();
+            resp[9] = new Date(new Date().setHours(0,0,0,0));
         }
+        resp[9] = resp[9].toLocaleDateString();
         notice.textContent = resp[0];
         title.value = `${resp[1]} ${resp[2]} ${resp[3]} - ${resp[4]}`;
         ref.value = `${resp[5]} ${resp[6]}`;
         con.value = `${resp[7]}`;
         address.value = `${resp[10]}`;
         dims.value = `${resp[8]}`;
-        pdate.value = `${resp[9].substr(0,10)}`;
+        pdate.value = `${resp[9].substr(6,4)}-${resp[9].substr(3,2)}-${resp[9].substr(0,2)}`;
         ref2.value = `${resp[11]}`;
         input.value = ``;
     });
