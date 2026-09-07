@@ -228,7 +228,7 @@ async function writeClipboard() {
 }
 
 async function outputClipboard() {
-    await navigator.clipboard.writeText(`["${title.value}","${ref.value}","${ref2.value}","${con.value}","${pdate.value} 00:00","${address.value}","${dims.value}"]`);
+    await navigator.clipboard.writeText(`["${title.value}","${ref.value}","${ref2.value}","${con.value}","${new Date(pdate.value).toLocaleDateString()} 00:00","${address.value}","${dims.value}"]`);
 }
 
 function init() {
