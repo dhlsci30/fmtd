@@ -154,7 +154,7 @@ function draw() {
 
     const massb = document.createElement("button");
     massb.textContent = "Mass";
-    massb.style = "border:0";
+    massb.style = "border:1px solid";
 
     const counter = document.createElement("i");
     counter.style = "margin-right:1em;float:right";
@@ -166,7 +166,7 @@ function draw() {
 
     const button = document.createElement("button");
     button.textContent = "Import Consignment";
-    button.style = "float:right;border:0";
+    button.style = "float:right;border:1px solid";
 
     title = document.createElement("input");
     title.placeholder = "Job name";
