@@ -1,4 +1,5 @@
 let domain = "AUNWP";
+let input, title, ref, con, address, dims, pdate, ref2;
 let massResponse = [];
 let barcodes = [];
 
@@ -151,7 +152,7 @@ function draw() {
     counter.style = "margin-right:1em;float:right";
     counter.id = "lookupsCount";
 
-    const input = document.createElement("input");
+    input = document.createElement("input");
     input.placeholder = "Connote no."
     input.style = "float:right";
 
@@ -159,31 +160,31 @@ function draw() {
     button.textContent = "Import Consignment";
     button.style = "float:right;border:0";
 
-    const title = document.createElement("input");
+    title = document.createElement("input");
     title.placeholder = "Job name";
     title.style = "width:70%";
 
-    const ref = document.createElement("input");
+    ref = document.createElement("input");
     ref.placeholder = "Reference";
     ref.style = "width:30%";
 
-    const con = document.createElement("input");
+    con = document.createElement("input");
     con.placeholder = "Consignment";
     con.style = "width:20%";
 
-    const address = document.createElement("input");
+    address = document.createElement("input");
     address.placeholder = "Address";
     address.style = "width:80%";
 
-    const dims = document.createElement("input");
+    dims = document.createElement("input");
     dims.placeholder = "Dimensions";
     dims.style = "width:100%";
 
-    const pdate = document.createElement("input");
+    pdate = document.createElement("input");
     pdate.type = "date";
     pdate.style = "width:50%";
 
-    const ref2 = document.createElement("input");
+    ref2 = document.createElement("input");
     ref2.placeholder = "Internal Ref";
     ref2.style = "width:50%";
     
