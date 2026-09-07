@@ -152,27 +152,47 @@ function draw() {
     counter.id = "lookupsCount";
 
     const input = document.createElement("input");
-    input.placeholder = "Consignment no."
+    input.placeholder = "Connote no."
     input.style = "float:right";
 
     const button = document.createElement("button");
-    button.textContent = "Get Consignment";
-    button.style = "float:right";
+    button.textContent = "Import Consignment";
+    button.style = "float:right;border:0";
 
     const title = document.createElement("input");
-    title.readOnly = true;
-    title.style = "width:100%;text-align:right";
+    title.placeholder = "Job name";
+    title.style = "width:70%";
+
     const ref = document.createElement("input");
-    ref.readOnly = true;
-    ref.style = "width:100%;text-align:right";
+    ref.placeholder = "Reference";
+    ref.style = "width:30%";
+
     const con = document.createElement("input");
-    con.readOnly = true;
-    con.style = "width:100%;text-align:right";
+    con.placeholder = "Consignment";
+    con.style = "width:20%";
+
+    const address = document.createElement("input");
+    address.placeholder = "Address";
+    address.style = "width:80%";
+
+    const dims = document.createElement("input");
+    dims.placeholder = "Dimensions";
+    dims.style = "width:100%";
+
+    const pdate = document.createElement("input");
+    pdate.type = "date";
+    pdate.style = "width:50%";
+
+    const ref2 = document.createElement("input");
+    ref2.placeholder = "Internal Ref";
+    ref2.style = "width:50%";
+    
+    const output = document.createElement("button");
+    output.textContent = "Export to FMTD-I";
+    output.style = "width:100%";
+
     const notice = document.createElement("p");
     notice.style = "margin:0";
-    const csv = document.createElement("input");
-    csv.readOnly = true;
-    csv.style = "width:100%;text-align:right";
 
     button.addEventListener("click", async () => {
         resp = await c(input.value)
@@ -180,19 +200,21 @@ function draw() {
         if (new Date(resp[9]) < new Date().setHours(0, 0, 0, 0)) {
             resp[9] = new Date(new Date().setHours(0,0,0,0)).toISOString();
         }
-        resp[9] = new Date(resp[9]).toLocaleDateString();
         notice.textContent = resp[0];
         title.value = `${resp[1]} ${resp[2]} ${resp[3]} - ${resp[4]}`;
         ref.value = `${resp[5]} ${resp[6]}`;
         con.value = `${resp[7]}`;
-        csv.value = `["${title.value}","${ref.value}","${resp[11]}","${con.value}","${resp[9]} 00:00","${resp[10]}","${resp[8]}"]`;
+        address.value = `${resp[10]}`;
+        dims.value = `${resp[8]}`;
+        pdate.value = `${resp[9].substr(0,10)}`;
+        ref2.value = `${resp[11]}`;
         input.value = ``;
     });
     title.addEventListener("click", writeClipboard);
     ref.addEventListener("click", writeClipboard);
     con.addEventListener("click", writeClipboard);
-    csv.addEventListener("click", writeClipboard);
-    container.append(header, login, button, input, counter, title, ref, con, csv, notice);
+    output.addEventListener("click", outputClipboard)
+    container.append(header, login, button, input, counter, title, ref, con, address, dims, pdate, ref2, output, notice);
     document.body.appendChild(container);
 }
 
@@ -202,6 +224,10 @@ function updateCounter() {
 
 async function writeClipboard() {
     await navigator.clipboard.writeText(this.value);
+}
+
+async function outputClipboard() {
+    await navigator.clipboard.writeText(`["${title.value}","${ref.value}","${ref2.value}","${con.value}","${pdate.value} 00:00","${address.value}","${dims.value}"]`);
 }
 
 function init() {
