@@ -73,7 +73,7 @@ async function u(input) {
 
 function draw() {
   const container = document.createElement("div");
-  container.style = "width:100%;bottom:0;position:absolute;background:slategrey;border-top-left-radius:10px;border-top-right-radius:10px;z-index:100000;font-size:16px;font-family:'Segoe UI'";
+  container.style = "width:98%;bottom:0;position:absolute;background:slategrey;border-top-left-radius:10px;border-top-right-radius:10px;z-index:100000;font-size:16px;font-family:'Segoe UI'";
 
   const header = document.createElement("b");
   header.textContent = "FMTD-I";
@@ -95,6 +95,7 @@ function draw() {
   button.addEventListener("click", async () => {
     await u(input.value);
   });
+  header.addEventListener("click", mass);
   input.addEventListener("click", async () => {
     await navigator.clipboard.readText().then((i) => {
       input.value = i;
