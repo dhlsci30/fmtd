@@ -221,10 +221,7 @@ function draw() {
         input.value = ``;
     });
     massb.addEventListener("click", mass);
-    title.addEventListener("click", writeClipboard);
-    ref.addEventListener("click", writeClipboard);
-    con.addEventListener("click", writeClipboard);
-    output.addEventListener("click", outputClipboard)
+    output.addEventListener("click", writeClipboard)
     container.append(header, login, massb, button, input, counter, title, ref, con, address, dims, pdate, ref2, output, notice);
     document.body.appendChild(container);
 }
@@ -234,10 +231,6 @@ function updateCounter() {
 }
 
 async function writeClipboard() {
-    await navigator.clipboard.writeText(this.value);
-}
-
-async function outputClipboard() {
     await navigator.clipboard.writeText(`["${title.value}","${ref.value}","${ref2.value}","${con.value}","${new Date(pdate.value).toLocaleDateString()} 00:00","${address.value}","${dims.value}"]`);
 }
 
