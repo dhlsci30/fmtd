@@ -142,7 +142,7 @@ async function c(orderId) {
 
 function draw() {
     const container = document.createElement("div");
-    container.style = "width:40%;text-align:left;bottom:0;right:0;position:absolute;background:slategrey;margin:2em;padding:1em;border-radius:10px;z-index:100000";
+    container.style = "width:40%;text-align:left;top:0;right:0;position:absolute;background:slategrey;padding:1em;border-bottom-left-radius:10px;z-index:100000";
 
     const header = document.createElement("b");
     header.textContent = "FMTD-O";
