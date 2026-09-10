@@ -4,8 +4,6 @@ let massResponse = [];
 let barcodes = [];
 
 let customers2 = new Map();
-
-const customers = JSON.parse(localStorage.getItem('customers'));
 const normalSuburbs = JSON.parse(localStorage.getItem('normalSuburbs'));
 const suburbs = JSON.parse(localStorage.getItem('suburbs'));
 
@@ -13,7 +11,6 @@ const bunnings = ["31776_15827930", "31776_15829515", "31776_15833744", "31776_1
 
 const normalise = s => normalSuburbs[s] || s;
 const cardinal = s => suburbs[s] || "UNK";
-const rename = (name, id) => customers[id] || name;
 
 async function mass() {
     let input = prompt("CSV consignments").split(",");
@@ -136,7 +133,7 @@ async function c(orderId) {
         
         localStorage.setItem("lookups", parseInt(localStorage.getItem("lookups"))+1);
         updateCounter();
-        return [notice, cardinal(normalise(search[0].toLowerCase())), normalise(search[0].toLowerCase()).toUpperCase(), rename(search[1], search[5]), search[2][0], search[3], details[0], orderId, details[1], date, search[7], search[8], search[5]];
+        return [notice, cardinal(normalise(search[0].toLowerCase())), normalise(search[0].toLowerCase()).toUpperCase(), search[1], search[2][0], search[3], details[0], orderId, details[1], date, search[7], search[8], search[5]];
     } catch (error) {
         return [`Error fetching order info: ${error}`];
     }
@@ -225,6 +222,9 @@ function draw() {
         ref2.value = `${resp[11]}`;
         route.value = `${resp[12]}`;
         input.value = ``;
+
+        title.value = customers.get(resp[12])[0] || title.value;
+        address.value = customers.get(resp[12])[1] || address.value;
     });
     massb.addEventListener("click", mass);
     output.addEventListener("click", writeClipboard)
@@ -237,15 +237,15 @@ function updateCounter() {
 }
 
 function updateCustomers(id, title, address) {
-    customers2.set(id, [title, address]);
-    let customersEntries = Array.from(customers2.entries());
+    customers.set(id, [title, address]);
+    let customersEntries = Array.from(customers.entries());
     localStorage.setItem("customers2", JSON.stringify(customersEntries));
 }
 
 function loadCustomers() {
     let customersString = localStorage.getItem("customers2");
     let customersEntries = JSON.parse(customersString);
-    customers2 = new Map(customersEntries);
+    customers = new Map(customersEntries);
 }
 
 async function writeClipboard() {
