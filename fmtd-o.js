@@ -3,7 +3,7 @@ let input, title, ref, con, address, dims, pdate, ref2, route;
 let massResponse = [];
 let barcodes = [];
 
-let customers2 = new Map();
+let customers = new Map();
 const normalSuburbs = JSON.parse(localStorage.getItem('normalSuburbs'));
 const suburbs = JSON.parse(localStorage.getItem('suburbs'));
 
@@ -239,11 +239,11 @@ function updateCounter() {
 function updateCustomers(id, title, address) {
     customers.set(id, [title, address]);
     let customersEntries = Array.from(customers.entries());
-    localStorage.setItem("customers2", JSON.stringify(customersEntries));
+    localStorage.setItem("customers", JSON.stringify(customersEntries));
 }
 
 function loadCustomers() {
-    let customersString = localStorage.getItem("customers2");
+    let customersString = localStorage.getItem("customers");
     let customersEntries = JSON.parse(customersString);
     customers = new Map(customersEntries);
 }
