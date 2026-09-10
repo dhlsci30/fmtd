@@ -1,7 +1,9 @@
 let domain = "AUNWP";
-let input, title, ref, con, address, dims, pdate, ref2;
+let input, title, ref, con, address, dims, pdate, ref2, route;
 let massResponse = [];
 let barcodes = [];
+
+const customers2 = new Map();
 
 const customers = JSON.parse(localStorage.getItem('customers'));
 const normalSuburbs = JSON.parse(localStorage.getItem('normalSuburbs'));
@@ -195,6 +197,9 @@ function draw() {
     ref2 = document.createElement("input");
     ref2.placeholder = "Internal Ref";
     ref2.style = "width:50%";
+
+    route = document.createElement("input");
+    route.type = "hidden";
     
     const output = document.createElement("button");
     output.textContent = "Export to FMTD-I";
@@ -222,7 +227,7 @@ function draw() {
     });
     massb.addEventListener("click", mass);
     output.addEventListener("click", writeClipboard)
-    container.append(header, login, massb, button, input, counter, title, ref, con, address, dims, pdate, ref2, output, notice);
+    container.append(header, login, massb, button, input, counter, title, ref, con, address, dims, pdate, ref2, route, output, notice);
     document.body.appendChild(container);
 }
 
