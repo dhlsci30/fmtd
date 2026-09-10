@@ -136,7 +136,7 @@ async function c(orderId) {
         
         localStorage.setItem("lookups", parseInt(localStorage.getItem("lookups"))+1);
         updateCounter();
-        return [notice, cardinal(normalise(search[0].toLowerCase())), normalise(search[0].toLowerCase()).toUpperCase(), rename(search[1], search[5]), search[2][0], search[3], details[0], orderId, details[1], date, search[7], search[8], serach[5]];
+        return [notice, cardinal(normalise(search[0].toLowerCase())), normalise(search[0].toLowerCase()).toUpperCase(), rename(search[1], search[5]), search[2][0], search[3], details[0], orderId, details[1], date, search[7], search[8], search[5]];
     } catch (error) {
         return [`Error fetching order info: ${error}`];
     }
