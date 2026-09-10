@@ -235,7 +235,20 @@ function updateCounter() {
     document.getElementById("lookupsCount").innerHTML = localStorage.getItem("lookups");
 }
 
+function updateCustomers(id, title, address) {
+    customers2.set(id, [title, address]);
+    let customersEntries = Array.from(customers2.entries());
+    localStorage.setItem("customers2", JSON.stringify(customersEntries));
+}
+
+function loadCustomers() {
+    let customersString = localStorage.getItem("customers2");
+    let customersEntries = JSON.parse(customersString);
+    customers2 = new Map(customersEntries);
+}
+
 async function writeClipboard() {
+    updateCustomers(route.value, title.value, address.value);
     await navigator.clipboard.writeText(`["${title.value}","${ref.value}","${ref2.value}","${con.value}","${new Date(pdate.value).toLocaleDateString()} 00:00","${address.value}","${dims.value}"]`);
 }
 
@@ -248,6 +261,7 @@ function init() {
         document.getElementById("dhlEmail").value = localStorage.getItem("dhlEmail");
     }
     updateCounter();
+    loadCustomers();
 }
 
 init();
