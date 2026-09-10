@@ -136,7 +136,7 @@ async function c(orderId) {
         
         localStorage.setItem("lookups", parseInt(localStorage.getItem("lookups"))+1);
         updateCounter();
-        return [notice, cardinal(normalise(search[0].toLowerCase())), normalise(search[0].toLowerCase()).toUpperCase(), rename(search[1], search[5]), search[2][0], search[3], details[0], orderId, details[1], date, search[7], search[8]];
+        return [notice, cardinal(normalise(search[0].toLowerCase())), normalise(search[0].toLowerCase()).toUpperCase(), rename(search[1], search[5]), search[2][0], search[3], details[0], orderId, details[1], date, search[7], search[8], serach[5]];
     } catch (error) {
         return [`Error fetching order info: ${error}`];
     }
@@ -223,6 +223,7 @@ function draw() {
         dims.value = `${resp[8]}`;
         pdate.value = `${resp[9].substr(6,4)}-${resp[9].substr(3,2)}-${resp[9].substr(0,2)}`;
         ref2.value = `${resp[11]}`;
+        route.value = `${resp[12]}`;
         input.value = ``;
     });
     massb.addEventListener("click", mass);
