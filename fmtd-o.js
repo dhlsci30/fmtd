@@ -3,7 +3,7 @@ let input, title, ref, con, address, dims, pdate, ref2, route;
 let massResponse = [];
 let barcodes = [];
 
-const customers2 = new Map();
+let customers2 = new Map();
 
 const customers = JSON.parse(localStorage.getItem('customers'));
 const normalSuburbs = JSON.parse(localStorage.getItem('normalSuburbs'));
