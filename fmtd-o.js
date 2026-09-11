@@ -25,19 +25,9 @@ async function mass() {
 
 async function doMass(con) {
     let resp = await c(con);
-    const today = new Date().setHours(0, 0, 0, 0);
-    if (resp[9] == null) {
-        resp[9] = today;
-    }
-    const date = new Date(resp[9])
-    date.setHours(0, 0, 0, 0);
-
-    if (new Date(resp[9]) < new Date().setHours(0, 0, 0, 0)) {
-        resp[9] = new Date(new Date().setHours(0,0,0,0)).toISOString();
-    }
-    resp[9] = new Date(resp[9]).toLocaleDateString();
+    let [ftitle, fdate, faddress] = format(resp);
     
-    massResponse.push(`["${resp[1]} ${resp[2]} ${resp[3]} - ${resp[4]}","${resp[5]} ${resp[6]}","${resp[11]}","${resp[7]}","${resp[9]} 00:00","${resp[10]}","${resp[8]}"]`);
+    massResponse.push(`["${ftitle}","${resp[5]} ${resp[6]}","${resp[11]}","${resp[7]}","${fdate} 00:00","${faddress}","${resp[8]}"]`);
 }
 
 async function fetchData(endpoint, payload) {
@@ -139,6 +129,29 @@ async function c(orderId) {
     }
 }
 
+function format(args) {
+    // 0 = notice   1 = cardinal    2 = suburb
+    // 3 = title    4 = service     5 = state
+    // 6 = plts+wgt 7 = consignment 8 = dims
+    // 9 = date     10 = address    11 = ref2
+    // 12 = route
+    const today = new Date().setHours(0, 0, 0, 0);
+    if (resp[9] == null) {
+        resp[9] = today;
+    }
+    if (new Date(resp[9]) < new Date().setHours(0, 0, 0, 0)) {
+        resp[9] = new Date(new Date().setHours(0,0,0,0)).toISOString();
+    }
+    let date = new Date(resp[9]).toLocaleDateString();
+
+    let title = `${args[1]} ${args[2]} ${args[3]} - ${args[4]}`;
+    title = customers.get(args[12])[0] || title;
+
+    let address = `${args[10]}`;
+    address = customers.get(args[12])[1] || address;
+    return [title, date, address];
+}
+
 function draw() {
     const container = document.createElement("div");
     container.style = "width:40%;text-align:left;top:0;right:0;position:absolute;background:slategrey;padding:1em;border-bottom-left-radius:10px;z-index:100000";
@@ -207,24 +220,18 @@ function draw() {
 
     button.addEventListener("click", async () => {
         resp = await c(input.value)
-        let date = new Date(resp[9]);
-        if (new Date(resp[9]) < new Date().setHours(0, 0, 0, 0)) {
-            resp[9] = new Date(new Date().setHours(0,0,0,0));
-        }
-        resp[9] = resp[9].toLocaleDateString();
+        let [ftitle, fdate, faddress] = format(resp);
+
         notice.textContent = resp[0];
-        title.value = `${resp[1]} ${resp[2]} ${resp[3]} - ${resp[4]}`;
+        title.value = ftitle;
         ref.value = `${resp[5]} ${resp[6]}`;
         con.value = `${resp[7]}`;
-        address.value = `${resp[10]}`;
+        address.value = faddress;
         dims.value = `${resp[8]}`;
-        pdate.value = `${resp[9].substr(6,4)}-${resp[9].substr(3,2)}-${resp[9].substr(0,2)}`;
+        pdate.value = `${fdate.substr(6,4)}-${fdate.substr(3,2)}-${fdate.substr(0,2)}`;
         ref2.value = `${resp[11]}`;
         route.value = `${resp[12]}`;
         input.value = ``;
-
-        title.value = customers.get(resp[12])[0] || title.value;
-        address.value = customers.get(resp[12])[1] || address.value;
     });
     massb.addEventListener("click", mass);
     output.addEventListener("click", writeClipboard)
