@@ -145,10 +145,12 @@ function format(args) {
     let date = new Date(resp[9]).toLocaleDateString();
 
     let title = `${args[1]} ${args[2]} ${args[3]} - ${args[4]}`;
-    title = customers.get(args[12])[0] || title;
-
     let address = `${args[10]}`;
-    address = customers.get(args[12])[1] || address;
+    if (customers.has(args[12])) {
+        title = customers.get(args[12])[0];
+        address = customers.get(args[12])[1]
+    }
+    
     return [title, date, address];
 }
 
