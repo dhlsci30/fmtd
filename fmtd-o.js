@@ -1,6 +1,8 @@
 let domain = "AUNWP";
-let input, title, ref, con, address, dims, pdate, ref2, route;
+let input, title, ref, con, address, dims, pdate, ref2, route, massdiv, massinput, massdate, massnotice;
 let massResponse = [];
+let massCounter = 0;
+let massMax = 0;
 let barcodes = [];
 
 let customers = new Map();
@@ -12,22 +14,42 @@ const bunnings = ["31776_15827930", "31776_15829515", "31776_15833744", "31776_1
 const normalise = s => normalSuburbs[s] || s;
 const cardinal = s => suburbs[s] || "UNK";
 
-async function mass() {
-    let input = prompt("CSV consignments").split(",");
+function toggleMass() {
+    if (massdiv.style.visibility == "hidden") {
+        massdiv.style.visibility = "visible";
+    } else {
+        massdiv.style.visibility = "hidden";
+    }
+}
+
+async function massProcess() {
+    if (massinput.value == "") {
+        return;
+    }
+    massCounter = 0;
     massResponse = [];
     barcodes = [];
-    input.forEach(con=>doMass(con));
-    setTimeout(async () => {
-        await navigator.clipboard.writeText(JSON.stringify(massResponse));
-        alert("Mass consignments copied to clipboard");
-    }, 8000);
+    let masscons = massinput.value.split(",");
+    massinput.value = "";
+    massMax = masscons.length;
+    massnotice.textContent = `Processing... 0/${massMax}`
+    masscons.forEach(con=>doMass(con));
+}
+
+async function massCopy() {
+    await navigator.clipboard.writeText(JSON.stringify(massResponse));
 }
 
 async function doMass(con) {
     let resp = await c(con);
     let [ftitle, fdate, faddress] = format(resp);
     
-    massResponse.push(`["${ftitle}","${resp[5]} ${resp[6]}","${resp[11]}","${resp[7]}","${fdate} 00:00","${faddress}","${resp[8]}"]`);
+    massResponse.push([`${ftitle}`,`${resp[5]} ${resp[6]}`,`${resp[11]}`,`${resp[7]}`,`${fdate} 00:00`,`${faddress}`,`${resp[8]}`]);
+    massCounter = massCounter + 1;
+    massnotice.textContent = `Processing... ${massCounter}/${massMax}`;
+    if (massCounter == massMax) {
+        massnotice.textContent = `Done! Ready to export`;
+    }
 }
 
 async function fetchData(endpoint, payload) {
@@ -136,13 +158,13 @@ function format(args) {
     // 9 = date     10 = address    11 = ref2
     // 12 = route
     const today = new Date().setHours(0, 0, 0, 0);
-    if (resp[9] == null) {
-        resp[9] = today;
+    if (args[9] == null) {
+        args[9] = today;
     }
-    if (new Date(resp[9]) < new Date().setHours(0, 0, 0, 0)) {
-        resp[9] = new Date(new Date().setHours(0,0,0,0)).toISOString();
+    if (new Date(args[9]) < new Date().setHours(0, 0, 0, 0)) {
+        args[9] = new Date(new Date().setHours(0,0,0,0)).toISOString();
     }
-    let date = new Date(resp[9]).toLocaleDateString();
+    let date = new Date(args[9]).toLocaleDateString();
 
     let title = `${args[1]} ${args[2]} ${args[3]} - ${args[4]}`;
     let address = `${args[10]}`;
@@ -220,6 +242,29 @@ function draw() {
     const notice = document.createElement("p");
     notice.style = "margin:0";
 
+    massdiv = document.createElement("div");
+    massdiv.style = "width:40%;text-align:left;bottom:0;right:0;position:absolute;background:slategrey;padding:1em;border-top-left-radius:10px;z-index:100000;visibility:hidden";
+
+    massinput = document.createElement("input");
+    massinput.placeholder = "CSV connote nos.";
+    massinput.style = "width:100%";
+
+    const massprocess = document.createElement("button");
+    massprocess.textContent = "Process Consignments";
+    massprocess.style = "width:100%";
+
+    massdate = document.createElement("input");
+    massdate.type = "date";
+    massdate.style = "width:50%";
+
+    const masscopy = document.createElement("button");
+    masscopy.textContent = "Export to FMTD-I";
+    masscopy.style = "width:50%";
+
+    massnotice = document.createElement("p");
+    massnotice.textContent = "Waiting for mass processing...";
+    massnotice.style = "margin:0";
+
     button.addEventListener("click", async () => {
         resp = await c(input.value)
         let [ftitle, fdate, faddress] = format(resp);
@@ -235,10 +280,15 @@ function draw() {
         route.value = `${resp[12]}`;
         input.value = ``;
     });
-    massb.addEventListener("click", mass);
-    output.addEventListener("click", writeClipboard)
+    massb.addEventListener("click", toggleMass);
+    massprocess.addEventListener("click", massProcess);
+    output.addEventListener("click", writeClipboard);
+    masscopy.addEventListener("click", massCopy);
     container.append(header, login, massb, button, input, counter, title, ref, con, address, dims, pdate, ref2, route, output, notice);
+    massdiv.append(massinput, massprocess, massdate, masscopy, massnotice);
+    
     document.body.appendChild(container);
+    document.body.appendChild(massdiv);
 }
 
 function updateCounter() {
