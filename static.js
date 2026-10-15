@@ -91,7 +91,8 @@ localStorage.setItem('suburbs', JSON.stringify({
 	"coldstream": "E",
 	"notting hill": "E",
 	"boronia": "E",
-	"nunawading": "E"
+	"nunawading": "E",
+	"wantirna": "E"
 }));
 
 localStorage.setItem('normalSuburbs', JSON.stringify({
@@ -124,7 +125,8 @@ localStorage.setItem('normalSuburbs', JSON.stringify({
 	"melbourne airport": "airport", 
 	"kilsyth south": "kilsyth",
 	"heidelberg west": "heidelberg", 
-	"north melbourne": "north melb"
+	"north melbourne": "north melb",
+	"wantirna south": "wantirna"
 }));
 
 let temp = new Map();
