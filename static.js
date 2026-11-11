@@ -1,4 +1,6 @@
 localStorage.setItem('suburbs', JSON.stringify({
+	"interstate": "I",
+	
 	"dandenong": "S",
 	"braeside": "S",
 	"carrum": "S",
