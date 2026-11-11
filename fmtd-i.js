@@ -17,7 +17,8 @@ async function u(input) {
       "start": "08/08/2026 00:00",
       "startTypeId": 2,
       "title": "E BAYSWATER TEST - G",
-      "reference2": ""
+      "reference2": "",
+      "carrierReference": ""
     },
     "dispatch": {
       "start": null,
@@ -51,6 +52,7 @@ async function u(input) {
   payload.details.title = input[0];
   payload.details.reference = input[1];
   payload.details.reference2 = input[2];
+  payload.details.carrierReference = input[7];
   payload.details.docketNumber = input[3];
   payload.details.start = input[4];
   payload.legs[0].customer.address = input[5];
