@@ -2,6 +2,7 @@ let domain = "AUNWP";
 let input, title, ref, con, address, dims, pdate, ref2, route;
 let massResponse = [];
 let barcodes = [];
+let delMode = `PICKUP`;
 
 let customers = new Map();
 const normalSuburbs = JSON.parse(localStorage.getItem('normalSuburbs'));
@@ -259,7 +260,7 @@ function loadCustomers() {
 
 async function writeClipboard() {
     updateCustomers(route.value, title.value, address.value);
-    await navigator.clipboard.writeText(`["${title.value}","${ref.value}","${ref2.value}","${con.value}","${new Date(pdate.value).toLocaleDateString()} 00:00","${address.value}","${dims.value}"]`);
+    await navigator.clipboard.writeText(`["${title.value}","${ref.value}","${ref2.value}","${con.value}","${new Date(pdate.value).toLocaleDateString()} 00:00","${address.value}","${dims.value}","${delMode}"]`);
 }
 
 function init() {
