@@ -28,7 +28,7 @@ async function doMass(con) {
     let resp = await c(con);
     let [ftitle, fdate, faddress] = format(resp);
     
-    massResponse.push(`["${ftitle}","${resp[5]} ${resp[6]}","${resp[11]}","${resp[7]}","${fdate} 00:00","${faddress}","${resp[8]}","${resp[12]}"]`);
+    massResponse.push(`["${ftitle}","${resp[5]} ${resp[6]}","${resp[11]}","${resp[7]}","${fdate} 00:00","${faddress}","${resp[8]}","${resp[12]}","${delMode?`DELIVERY`:`PICKUP`}"]`);
 }
 
 async function fetchData(endpoint, payload) {
