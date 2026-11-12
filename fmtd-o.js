@@ -2,7 +2,7 @@ let domain = "AUNWP";
 let input, title, ref, con, address, dims, pdate, ref2, route;
 let massResponse = [];
 let barcodes = [];
-let delMode = `PICKUP`;
+let delMode = false;
 
 let customers = new Map();
 const normalSuburbs = JSON.parse(localStorage.getItem('normalSuburbs'));
@@ -28,7 +28,7 @@ async function doMass(con) {
     let resp = await c(con);
     let [ftitle, fdate, faddress] = format(resp);
     
-    massResponse.push(`["${ftitle}","${resp[5]} ${resp[6]}","${resp[11]}","${resp[7]}","${fdate} 00:00","${faddress}","${resp[8]}"]`);
+    massResponse.push(`["${ftitle}","${resp[5]} ${resp[6]}","${resp[11]}","${resp[7]}","${fdate} 00:00","${faddress}","${resp[8]}","${resp[12]}"]`);
 }
 
 async function fetchData(endpoint, payload) {
@@ -47,8 +47,8 @@ async function fetchData(endpoint, payload) {
 }
 
 async function getOrderDetails(orderId, email) {
-    const payload = {ordersRequest:{orderId, userName:email, domain:domain}};
-    const data = await fetchData("/getOrderDetail", payload);
+    const payload = {ordersRequest:{orderIds:[`${orderId}`], userName:email, domain:domain}};
+    const data = await fetchData("/getOrderDetailForBulkReprints", payload);
     let qty = 0, weight = 0, spaces = 0;
     let barcodes = [];
     let dg = new Map();
@@ -77,10 +77,10 @@ async function getOrderDetails(orderId, email) {
 }
 
 async function searchOrder(orderId, email) {
-    const payload = {ordersRequest:{orderId, userName:email, domain:domain}};
-    const data = await fetchData("/searchOrders", payload);
+    const payload = {ordersRequest:{orderIds:[`${orderId}`], userName:email, domain:domain}};
+    const data = await fetchData("/getOrdersForBulkReprints", payload);
     let order = data.getOrdersResponse.getOrders[0];
-    return [order.senderSuburb, order.senderName, order.rateServiceId || "G", order.rcvrProvince, order.senderProvince, order.sourceLocationId, order.latePickupDate, order.sourceLocation, order.rcvrSuburb];
+    return [order.senderLocationDetails.city, order.senderName, order.rateServiceId || "G", order.receiverLocationDetails.provinceCode, order.senderLocationDetails.provinceCode, order.sourceLocationId, order.latePickupDate, order.sourceLocation, order.receiverLocationDetails.city, order.destinationLocation, order.receiverName, order.destLocationId];
 }
 
 async function c(orderId) {
@@ -102,7 +102,24 @@ async function c(orderId) {
         let notice = ``;
 
         if (search[4] != "VIC") {
+            search[0] = `INTERSTATE`;
             notice += `Consignment is being sent from ${search[4]}, not VIC!\n`;
+        }
+
+        let suburb = ``;
+        let name = ``;
+        let address = ``;
+        let route = ``;
+        if (delMode) {
+            suburb = normalise(search[8].toLowerCase()).toUpperCase();
+            name = search[10];
+            address = search[9];
+            route = search[11];
+        } else {
+            suburb = normalise(search[0].toLowerCase()).toUpperCase();
+            name = search[1];
+            address = search[7];
+            route = search[5];
         }
 
         const today = new Date().setHours(0, 0, 0, 0);
@@ -124,7 +141,8 @@ async function c(orderId) {
         
         localStorage.setItem("lookups", parseInt(localStorage.getItem("lookups"))+1);
         updateCounter();
-        return [notice, cardinal(normalise(search[0].toLowerCase())), normalise(search[0].toLowerCase()).toUpperCase(), search[1], search[2][0], search[3], details[0], orderId, details[1], date, search[7], search[8], search[5]];
+
+        return [notice, cardinal(suburb.toLowerCase()), suburb, name, search[2][0], search[3], details[0], orderId, details[1], date, address, search[8], route, search[9], search[10], search[11]];
     } catch (error) {
         return [`Error fetching order info: ${error}`];
     }
@@ -135,7 +153,8 @@ function format(args) {
     // 3 = title    4 = service     5 = state
     // 6 = plts+wgt 7 = consignment 8 = dims
     // 9 = date     10 = address    11 = ref2
-    // 12 = route
+    // 12 = route   13 = address2   14 = title2
+    // 15 = route2
     const today = new Date().setHours(0, 0, 0, 0);
     if (resp[9] == null) {
         resp[9] = today;
@@ -222,7 +241,8 @@ function draw() {
     notice.style = "margin:0";
 
     button.addEventListener("click", async () => {
-        resp = await c(input.value)
+        resp = await c(input.value);
+        console.log(resp);
         let [ftitle, fdate, faddress] = format(resp);
 
         notice.textContent = resp[0];
@@ -260,7 +280,7 @@ function loadCustomers() {
 
 async function writeClipboard() {
     updateCustomers(route.value, title.value, address.value);
-    await navigator.clipboard.writeText(`["${title.value}","${ref.value}","${ref2.value}","${con.value}","${new Date(pdate.value).toLocaleDateString()} 00:00","${address.value}","${dims.value}","${delMode}"]`);
+    await navigator.clipboard.writeText(`["${title.value}","${ref.value}","${ref2.value}","${con.value}","${new Date(pdate.value).toLocaleDateString()} 00:00","${address.value}","${dims.value}","${delMode?`DELIVERY`:`PICKUP`}"]`);
 }
 
 function init() {
