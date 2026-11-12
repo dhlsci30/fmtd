@@ -45,7 +45,7 @@ async function u(input) {
     ]
   };
   input = JSON.parse(input);
-  if (input.length != 7) {
+  if (input.length != 8) {
     document.getElementById("fmtd").value = "Invalid data";
     return;
   }
